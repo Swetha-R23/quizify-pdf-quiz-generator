@@ -1,0 +1,8 @@
+{% extends 'quiz/base.html' %}
+
+{% block title %}Home - Quizify{% endblock %}
+
+{% block content %}
+<h1>Welcome to Quizify</h1>
+<button onclick="window.location.href='{% url 'upload_pdf' %}'">Let's Get Started</button>
+{% endblock %}

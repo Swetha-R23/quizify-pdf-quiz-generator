@@ -1,0 +1,87 @@
+{% extends 'quiz/base.html' %}
+
+{% block title %}Upload PDF - Quizify{% endblock %}
+
+{% block content %}
+<style>
+    .upload-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 80vh;
+        gap: 20px;
+    }
+
+    .quizify-title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #cdb4ff;
+        margin-top: -30px;
+        margin-bottom: 60px;
+        text-shadow: 0 0 15px rgba(180, 141, 255, 0.8);
+    }
+
+    .upload-area {
+        background-color: #2a2540;
+        padding: 50px 70px;
+        border-radius: 15px;
+        box-shadow: 0 0 40px rgba(180, 141, 255, 0.5);
+        width: 500px;
+        text-align: center;
+    }
+
+    .custom-file-input, select, button {
+        padding: 10px;
+        border-radius: 8px;
+        border: 2px solid #7b5cd6;
+        background-color: #1e1b29;
+        color: #cdb4ff;
+        cursor: pointer;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .custom-file-input::-webkit-file-upload-button {
+        background-color: #7b5cd6;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+
+    .custom-file-input::-webkit-file-upload-button:hover,
+    button:hover {
+        background-color: #9f86ff;
+        border-color: #9f86ff;
+    }
+</style>
+
+<div class="upload-container">
+    <div class="quizify-title">Quizify</div>
+
+    <div class="upload-area">
+        <h1>Upload a PDF File</h1>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- File input -->
+            <label>Select PDF:</label><br>
+            <input class="custom-file-input" type="file" name="pdf_file" accept="application/pdf" required><br>
+
+            <!-- Number of questions dropdown -->
+            <label>How many questions do you want? (1–10)</label><br>
+            <select name="num_questions" required>
+                {% for i in num_range %}
+                    <option value="{{ i }}">{{ i }}</option>
+                {% endfor %}
+            </select><br>
+
+            <!-- Only MCQ submit button -->
+            <button type="submit">Generate MCQ Quiz</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

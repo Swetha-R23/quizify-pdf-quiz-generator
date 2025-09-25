@@ -1,0 +1,30 @@
+{% extends 'quiz/base.html' %}
+
+{% block title %}Take the Quiz - Quizify{% endblock %}
+
+{% block content %}
+<div class="quiz-container">
+    <h1 class="quizify-title">Take the Quiz</h1>
+
+    <form method="post" action="{% url 'show_result' pdf_id=pdf_id %}">
+        {% csrf_token %}
+        {% for question in questions %}
+            <div class="question-block">
+                <p class="question-text">{{ forloop.counter }}. {{ question.question }}</p>
+
+                {% for letter, option in question.option_list %}
+                    <label class="option-label">
+                        <!-- ✅ Radio button now inside label -->
+                        <input type="radio" 
+                               name="question_{{ forloop.parentloop.counter }}" 
+                               value="{{ option }}" 
+                               required>
+                        {{ letter|upper }}. {{ option }}
+                    </label><br>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        <button type="submit" class="submit-btn">Submit</button>
+    </form>
+</div>
+{% endblock %}

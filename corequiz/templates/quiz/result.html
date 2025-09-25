@@ -1,0 +1,29 @@
+{% extends 'quiz/base.html' %}
+
+{% block title %}Quiz Result - Quizify{% endblock %}
+
+{% block content %}
+<div class="quiz-container">
+    <h1 class="quizify-title">Your Result</h1>
+    
+    <div class="score-box">
+        <p><strong>Score:</strong> {{ score }}/50</p>
+        <p><strong>Correct Answers:</strong> {{ correct }} / {{ total }}</p>
+    </div>
+
+    <div class="answers-list">
+        {% for question, data in user_answers.items %}
+            <div class="question-block {% if data.is_correct %}correct{% else %}incorrect{% endif %}">
+                <p class="question-text"><strong>{{ forloop.counter }}. {{ question.question }}</strong></p>
+                <p>Your Answer: <span class="{% if data.is_correct %}correct-text{% else %}incorrect-text{% endif %}">{{ data.your_answer }}</span></p>
+                <p>Correct Answer: <span class="correct-text">{{ data.correct_answer }}</span></p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="button-container">
+        <a href="{% url 'upload_pdf' %}" class="btn">Take Another Quiz</a>
+    </div>
+</div>
+{% endblock %}
+
